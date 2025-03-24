@@ -3,6 +3,11 @@
 name: Github Actions demo  
 on:
   workflow_dispatch:
+    inputs: 
+      environment: 
+        required: true
+        description: Which environment to deploy to
+        type: environment
   pull_request:
     branches: main
   push:
@@ -24,6 +29,13 @@ jobs:
         run: |
           echo "The repository ${{ github.repository }} contains the following files:"
           tree
+  test:
+    environment: Test
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - run: "echo \"Testing\""
+    
       
 
   
